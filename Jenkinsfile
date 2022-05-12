@@ -40,10 +40,14 @@ pipeline{
         stage('Nexus') {
             agent none 
             steps { 
+              script {
+                if(true){
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus_manven_user',usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                      echo "Nexus Connected..."
                     sh 'curl -v -u ${USERNAME}:${PASSWORD} --upload-file ng_project.tar.gz http://artefact.focus.com.tn:8081/repository/webbuild/com/ng_project/release-$BUILDVERSION/ng_project.tar.gz' 
                 } 
+                }
+              }
             } 
         } 
     }
